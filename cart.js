@@ -27,7 +27,7 @@ function updateCartView() {
   });
 
   // Обновляем общую стоимость
-  document.getElementById("total-price").textContent = totalPrice;
+  document.getElementById("total-price").textContent = totalPrice + " грн.";
 }
 
 // Находим все кнопки "Добавить в корзину" и добавляем обработчики событий
@@ -82,40 +82,44 @@ const orderForm = document.getElementById("order-form");
 
 orderForm.addEventListener("submit", function (event) {
   event.preventDefault();
-  
+
   const name = document.getElementById("name").value;
   const surname = document.getElementById("surname").value;
   const phone = document.getElementById("phone").value;
   const totalPrice = document.getElementById("total-price").textContent;
-  const cartItems = cart.map(item => `${item.name} - ${item.price} грн.`).join('\n');
+  const cartItems = cart
+    .map((item) => `${item.name} - ${item.price} грн.`)
+    .join("\n");
 
   const orderData = {
     name: name,
     surname: surname,
     phone: phone,
     totalPrice: totalPrice,
-    cartItems: cartItems
+    cartItems: cartItems,
   };
 
-  fetch('http://example.com/send-email', {
-    method: 'POST',
+  fetch("http://example.com/send-email", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(orderData)
+    body: JSON.stringify(orderData),
   })
-  .then(response => {
-    if (response.ok) {
-      alert("Your order has been successfully placed!");
-      cart = []; // Clear cart
-      updateCartView(); // Update cart view
-      orderModal.style.display = "none"; // Close modal
-    } else {
-      throw new Error('Failed to send order. Please try again later.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Failed to send order. Please try again later.');
-  });
+    .then((response) => {
+      if (response.ok) {
+        alert("Ваш заказ успешно размещен!");
+        cart = []; // Очищаем корзину
+        updateCartView(); // Обновляем отображение корзины
+        orderModal.style.display = "none"; // Закрываем модальное окно
+      } else {
+        throw new Error(
+          "Ошибка отправки заказа. Пожалуйста, попробуйте позже."
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Ошибка:", error);
+      alert("Ошибка отправки заказа. Пожалуйста, попробуйте позже.");
+    });
 });

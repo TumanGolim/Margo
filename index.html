@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Титульная страница</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h1>Товары</h1>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Товары</h1>
 
-    <div class="products">
-      <div class="product">
+<div class="products">
+    <div class="product">
         <h3>Товар 1</h3>
         <p>Цена: 100 грн.</p>
         <button class="add-to-cart-btn" data-name="Товар 1" data-price="100">
-          Добавить в корзину
+            Добавить в корзину
         </button>
-      </div>
-      <div class="product">
+    </div>
+    <div class="product">
         <h3>Товар 2</h3>
         <p>Цена: 200 грн.</p>
         <button class="add-to-cart-btn" data-name="Товар 2" data-price="200">
-          Добавить в корзину
+            Добавить в корзину
         </button>
-      </div>
     </div>
+</div>
 
-    <!-- Кнопка корзины -->
-    <button id="cart-toggle-btn" class="cart-toggle-btn">Корзина</button>
+<!-- Кнопка корзины -->
+<button id="cart-toggle-btn" class="cart-toggle-btn">Корзина</button>
 
-    <!-- Контейнер для содержимого корзины -->
-    <div id="cart-content" class="cart-content">
-      <button class="close-cart-btn">Закрыть</button>
-      <h2>Корзина</h2>
-      <ul id="cart-items">
+<!-- Контейнер для содержимого корзины -->
+<div id="cart-content" class="cart-content">
+    <button class="close-cart-btn">Закрыть</button>
+    <h2>Корзина</h2>
+    <ul id="cart-items">
         <!-- Здесь будут отображаться товары в корзине -->
-      </ul>
-      <p>Общая стоимость: <span id="total-price">0</span> грн.</p>
-      <button id="order-btn" class="order-btn">Заказать</button>
-    </div>
+    </ul>
+    <p>Общая стоимость: <span id="total-price">0 грн.</span></p>
+    <button id="order-btn" class="order-btn">Заказать</button>
+</div>
 
-    <script src="cart.js"></script>
-  </body>
+<!-- Модальное окно для заказа -->
+
+<script src="cart.js"></script>
+</body>
 </html>
