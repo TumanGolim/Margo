@@ -21,7 +21,7 @@ function updateCartView() {
   // Добавляем каждый товар в список
   cart.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${item.name} - ${item.price} руб.`;
+    listItem.textContent = `${item.name} - ${item.price} грн.`;
     cartList.appendChild(listItem);
     totalPrice += item.price;
   });
