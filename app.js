@@ -1,37 +1,52 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const axios = require("axios");
+const orderForm = document.getElementById("order-form");
 
-const app = express();
-const port = 3000;
+orderForm.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+  const name = document.getElementById("name").value;
+  const surname = document.getElementById("surname").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const city = document.getElementById("city").value;
+  const postOffice = document.getElementById("postOffice").value;
+  const totalPrice = document.getElementById("total-price").textContent;
+  const cartItems = cart
+    .map((item) => `${item.name} - ${item.price} грн.`)
+    .join("\n");
 
-app.post("/submit-form", async (req, res) => {
-  try {
-    const formData = {
-      "entry.1234567890": req.body.name,
-      "entry.0987654321": req.body.surname,
-      "entry.1357902468": req.body.phone,
-      "entry.2468013579": req.body.email,
-      "entry.8642075319": req.body.city,
-      "entry.9753186420": req.body.postOffice,
-      "entry.0123456789": req.body.totalPrice,
-      "entry.9876543210": req.body.cartItems,
-    };
+  const orderData = {
+    name: name,
+    surname: surname,
+    phone: phone,
+    email: email,
+    city: city,
+    postOffice: postOffice,
+    totalPrice: totalPrice,
+    cartItems: cartItems,
+  };
 
-    await axios.post(
-      "https://docs.google.com/forms/d/e/1FAIpQLSdbJxbCro6F4gKbhWYhJJEpSZM2ISZivQbU1l5PDyusEzm1JA/formResponse",
-      formData
-    );
-    res.status(200).send("Success");
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Error");
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  fetch("https://example.com/send-email", {
+    // Замените example.com на ваш URL для отправки электронной почты
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(orderData),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("Ваш заказ успешно размещен!");
+        cart = []; // Очищаем корзину
+        updateCartView(); // Обновляем отображение корзины
+        orderModal.style.display = "none"; // Закрываем модальное окно
+      } else {
+        throw new Error(
+          "Ошибка отправки заказа. Пожалуйста, попробуйте позже."
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Ошибка:", error);
+      alert("Ошибка отправки заказа. Пожалуйста, попробуйте позже.");
+    });
 });
