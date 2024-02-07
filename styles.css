@@ -1,0 +1,41 @@
+/* Стили для кнопки корзины */
+.cart-toggle-btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Стили для содержимого корзины */
+.cart-content {
+  position: fixed;
+  top: 50%;
+  right: -1000px; /* начальное положение за пределами экрана */
+  transform: translateY(-50%);
+  background-color: #f9f9f9;
+  width: 250px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+}
+
+.cart-content.active {
+  right: 0; /* выдвигаем содержимое корзины на экран */
+}
+
+/* Стили для кнопки "Закрыть" */
+.close-cart-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #fff;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
