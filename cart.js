@@ -106,6 +106,21 @@ orderForm.addEventListener("submit", function (event) {
     .map((item) => `${item.name} - ${item.price} грн.`)
     .join("\n");
 
+  const orderData = {
+    name: name,
+    surname: surname,
+    phone: phone,
+    email: email,
+    city: city,
+    postOffice: postOffice,
+    totalPrice: totalPrice,
+    cartItems: cartItems,
+  };
+
+  // Отправляем данные на Google Sheets
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbxKGpwx2EQ7DhmNvSkkpN--4FnqoF5fyZoQouV3epKidiiji2gd_EtrK3OfrZO5cckV/exec";
+
   const form = new FormData();
   form.append("name", name);
   form.append("surname", surname);
@@ -116,8 +131,6 @@ orderForm.addEventListener("submit", function (event) {
   form.append("totalPrice", totalPrice);
   form.append("cartItems", cartItems);
 
-  const scriptURL =
-    "https://script.google.com/macros/s/AKfycbzxMYtPJXNugZ-IuOJdBnnFjIlS_uq_mQY5lJ0JWem1Z33tTgbvjHB-KrPmbl0PXmw9yQ/exec"; // Замените на ваш URL скрипта Google Apps Script
   fetch(scriptURL, { method: "POST", body: form })
     .then((response) => console.log("Success!", response))
     .catch((error) => console.error("Error!", error));
