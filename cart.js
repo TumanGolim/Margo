@@ -9,20 +9,31 @@ function addToCart(name, price) {
 // Функция для обновления отображения корзины
 function updateCartView() {
   const cartList = document.getElementById("cart-items");
-  if (!cartList) {
-    console.error("Элемент с id 'cart-items' не найден на странице.");
+  const cartListModal = document.getElementById("cart-items-modal");
+
+  if (!cartList || !cartListModal) {
+    console.error(
+      "Элемент с id 'cart-items' или 'cart-items-modal' не найден на странице."
+    );
     return;
   }
 
   cartList.innerHTML = ""; // Очищаем список товаров
+  cartListModal.innerHTML = ""; // Очищаем список товаров в модальном окне
 
   let totalPrice = 0;
 
   // Добавляем каждый товар в список
   cart.forEach((item) => {
     const listItem = document.createElement("li");
+    const listItemModal = document.createElement("li");
+
     listItem.textContent = `${item.name} - ${item.price} грн.`;
+    listItemModal.textContent = `${item.name} - ${item.price} грн.`;
+
     cartList.appendChild(listItem);
+    cartListModal.appendChild(listItemModal);
+
     totalPrice += item.price;
   });
 
@@ -64,12 +75,13 @@ closeCartBtn.addEventListener("click", function () {
   cartContent.classList.remove("active");
 });
 
-// Добавляем функционал для открытия модального окна при клике на кнопку "Заказать"
+// Добавляем функционал для открытия и закрытия модального окна при клике на кнопку "Заказать" и "Закрыть"
 const orderBtn = document.getElementById("order-btn");
 const orderModal = document.getElementById("order-modal");
 const closeModalBtn = document.querySelector(".close-modal-btn");
 
 orderBtn.addEventListener("click", function () {
+  updateCartView(); // Обновляем отображение корзины в модальном окне
   orderModal.style.display = "block";
 });
 
@@ -86,6 +98,9 @@ orderForm.addEventListener("submit", function (event) {
   const name = document.getElementById("name").value;
   const surname = document.getElementById("surname").value;
   const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const city = document.getElementById("city").value;
+  const postOffice = document.getElementById("postOffice").value;
   const totalPrice = document.getElementById("total-price").textContent;
   const cartItems = cart
     .map((item) => `${item.name} - ${item.price} грн.`)
@@ -95,6 +110,9 @@ orderForm.addEventListener("submit", function (event) {
     name: name,
     surname: surname,
     phone: phone,
+    email: email,
+    city: city,
+    postOffice: postOffice,
     totalPrice: totalPrice,
     cartItems: cartItems,
   };

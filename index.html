@@ -41,6 +41,37 @@
 </div>
 
 <!-- Модальное окно для заказа -->
+<div id="order-modal" class="order-modal">
+    <div class="order-modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <h2>Оформление заказа</h2>
+        <p>Товары в корзине:</p>
+        <ul id="cart-items-modal">
+            <!-- Здесь будут отображаться товары в корзине -->
+        </ul>
+        <form id="order-form">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="entry.1234567890" required><br>
+
+            <label for="surname">Фамилия:</label>
+            <input type="text" id="surname" name="entry.0987654321" required><br>
+
+            <label for="phone">Телефон:</label>
+            <input type="tel" id="phone" name="entry.1357902468" required><br>
+
+            <label for="email">Почта:</label>
+            <input type="email" id="email" name="entry.2468013579" required><br>
+
+            <label for="city">Город доставки:</label>
+            <input type="text" id="city" name="entry.8642075319" required><br>
+
+            <label for="postOffice">Отделение Новой Почты:</label>
+            <input type="text" id="postOffice" name="entry.9753186420" required><br>
+
+            <input type="submit" value="Заказать">
+        </form>
+    </div>
+</div>
 
 <script src="cart.js"></script>
 </body>
