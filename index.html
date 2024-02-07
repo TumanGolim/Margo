@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Титульная страница</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<h1>Товары</h1>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Товары</h1>
 
-<div class="products">
-    <div class="product">
+    <div class="products">
+      <div class="product">
         <h3>Товар 1</h3>
         <p>Цена: 100 грн.</p>
         <button class="add-to-cart-btn" data-name="Товар 1" data-price="100">
-            Добавить в корзину
+          Добавить в корзину
         </button>
-    </div>
-    <div class="product">
+      </div>
+      <div class="product">
         <h3>Товар 2</h3>
         <p>Цена: 200 грн.</p>
         <button class="add-to-cart-btn" data-name="Товар 2" data-price="200">
-            Добавить в корзину
+          Добавить в корзину
         </button>
+      </div>
     </div>
-</div>
 
-<!-- Кнопка корзины -->
-<button id="cart-toggle-btn" class="cart-toggle-btn">Корзина</button>
+    <!-- Кнопка корзины -->
+    <button id="cart-toggle-btn" class="cart-toggle-btn">Корзина</button>
 
-<!-- Контейнер для содержимого корзины -->
-<div id="cart-content" class="cart-content">
-    <button class="close-cart-btn">Закрыть</button>
-    <h2>Корзина</h2>
-    <ul id="cart-items">
+    <!-- Контейнер для содержимого корзины -->
+    <div id="cart-content" class="cart-content">
+      <button class="close-cart-btn">Закрыть</button>
+      <h2>Корзина</h2>
+      <ul id="cart-items">
         <!-- Здесь будут отображаться товары в корзине -->
-    </ul>
-    <p>Общая стоимость: <span id="total-price">0 грн.</span></p>
-    <button id="order-btn" class="order-btn">Заказать</button>
-</div>
+      </ul>
+      <p>Общая стоимость: <span id="total-price">0 грн.</span></p>
+      <button id="order-btn" class="order-btn">Заказать</button>
+    </div>
 
-<!-- Модальное окно для заказа -->
-<div id="order-modal" class="order-modal">
-    <div class="order-modal-content">
+    <!-- Модальное окно для заказа -->
+    <div id="order-modal" class="order-modal">
+      <div class="order-modal-content">
         <span class="close-modal-btn">&times;</span>
         <h2>Оформление заказа</h2>
         <p>Товары в корзине:</p>
         <ul id="cart-items-modal">
-            <!-- Здесь будут отображаться товары в корзине -->
+          <!-- Здесь будут отображаться товары в корзине -->
         </ul>
         <form id="order-form">
-            <label for="name">Имя:</label>
-            <input type="text" id="name" name="entry.1234567890" required><br>
+          <label for="name">Имя:</label>
+          <input type="text" id="name" name="name" required /><br />
 
-            <label for="surname">Фамилия:</label>
-            <input type="text" id="surname" name="entry.0987654321" required><br>
+          <label for="surname">Фамилия:</label>
+          <input type="text" id="surname" name="surname" required /><br />
 
-            <label for="phone">Телефон:</label>
-            <input type="tel" id="phone" name="entry.1357902468" required><br>
+          <label for="phone">Телефон:</label>
+          <input type="tel" id="phone" name="phone" required /><br />
 
-            <label for="email">Почта:</label>
-            <input type="email" id="email" name="entry.2468013579" required><br>
+          <label for="email">Почта:</label>
+          <input type="email" id="email" name="email" required /><br />
 
-            <label for="city">Город доставки:</label>
-            <input type="text" id="city" name="entry.8642075319" required><br>
+          <label for="city">Город доставки:</label>
+          <input type="text" id="city" name="city" required /><br />
 
-            <label for="postOffice">Отделение Новой Почты:</label>
-            <input type="text" id="postOffice" name="entry.9753186420" required><br>
+          <label for="postOffice">Отделение Новой Почты:</label>
+          <input type="text" id="postOffice" name="postOffice" required /><br />
 
-            <input type="submit" value="Заказать">
+          <input type="submit" value="Заказать" />
         </form>
+      </div>
     </div>
-</div>
 
-<script src="cart.js"></script>
-</body>
+    <script src="cart.js"></script>
+  </body>
 </html>

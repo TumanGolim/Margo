@@ -106,38 +106,25 @@ orderForm.addEventListener("submit", function (event) {
     .map((item) => `${item.name} - ${item.price} грн.`)
     .join("\n");
 
-  const orderData = {
-    name: name,
-    surname: surname,
-    phone: phone,
-    email: email,
-    city: city,
-    postOffice: postOffice,
-    totalPrice: totalPrice,
-    cartItems: cartItems,
-  };
+  const form = new FormData();
+  form.append("name", name);
+  form.append("surname", surname);
+  form.append("phone", phone);
+  form.append("email", email);
+  form.append("city", city);
+  form.append("postOffice", postOffice);
+  form.append("totalPrice", totalPrice);
+  form.append("cartItems", cartItems);
 
-  fetch("http://example.com/send-email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(orderData),
-  })
-    .then((response) => {
-      if (response.ok) {
-        alert("Ваш заказ успешно размещен!");
-        cart = []; // Очищаем корзину
-        updateCartView(); // Обновляем отображение корзины
-        orderModal.style.display = "none"; // Закрываем модальное окно
-      } else {
-        throw new Error(
-          "Ошибка отправки заказа. Пожалуйста, попробуйте позже."
-        );
-      }
-    })
-    .catch((error) => {
-      console.error("Ошибка:", error);
-      alert("Ошибка отправки заказа. Пожалуйста, попробуйте позже.");
-    });
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbzxMYtPJXNugZ-IuOJdBnnFjIlS_uq_mQY5lJ0JWem1Z33tTgbvjHB-KrPmbl0PXmw9yQ/exec"; // Замените на ваш URL скрипта Google Apps Script
+  fetch(scriptURL, { method: "POST", body: form })
+    .then((response) => console.log("Success!", response))
+    .catch((error) => console.error("Error!", error));
+
+  // После успешной отправки заказа очищаем корзину и закрываем модальное окно
+  alert("Ваш заказ успешно размещен!");
+  cart = []; // Очищаем корзину
+  updateCartView(); // Обновляем отображение корзины
+  orderModal.style.display = "none"; // Закрываем модальное окно
 });
