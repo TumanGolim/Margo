@@ -118,18 +118,67 @@ orderForm.addEventListener("submit", function (event) {
   };
 
   // Отправляем данные на Google Sheets
+  // URL вашего Google Apps Script
   const scriptURL =
     "https://script.google.com/macros/s/AKfycbxKGpwx2EQ7DhmNvSkkpN--4FnqoF5fyZoQouV3epKidiiji2gd_EtrK3OfrZO5cckV/exec";
 
-  const form = new FormData();
-  form.append("name", name);
-  form.append("surname", surname);
-  form.append("phone", phone);
-  form.append("email", email);
-  form.append("city", city);
-  form.append("postOffice", postOffice);
-  form.append("totalPrice", totalPrice);
-  form.append("cartItems", cartItems);
+  // Функция для отправки данных на сервер
+  function sendOrderToGoogleAppsScript(data) {
+    // Создаем объект FormData для отправки данных формы
+    const form = new FormData();
+    form.append("name", data.name);
+    form.append("surname", data.surname);
+    form.append("phone", data.phone);
+    form.append("email", data.email);
+    form.append("city", data.city);
+    form.append("postOffice", data.postOffice);
+    form.append("totalPrice", data.totalPrice);
+    form.append("cartItems", data.cartItems);
+
+    // Отправляем данные на Google Apps Script
+    fetch(scriptURL, { method: "POST", body: form, mode: "cors" })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Действия при успешной отправке данных
+        console.log("Success:", data);
+        alert("Ваш заказ успешно размещен!");
+      })
+      .catch((error) => {
+        // Обработка ошибок
+        console.error("Error:", error);
+        alert("Произошла ошибка при отправке заказа.");
+      });
+  }
+
+  // Обработчик события отправки формы заказа
+  const orderForm = document.getElementById("order-form");
+
+  orderForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Получаем данные формы
+    const formData = {
+      name: document.getElementById("name").value,
+      surname: document.getElementById("surname").value,
+      phone: document.getElementById("phone").value,
+      email: document.getElementById("email").value,
+      city: document.getElementById("city").value,
+      postOffice: document.getElementById("postOffice").value,
+      totalPrice: document.getElementById("total-price").textContent,
+      cartItems: cart
+        .map((item) => `${item.name} - ${item.price} грн.`)
+        .join("\n"),
+    };
+
+    // Отправляем данные на сервер
+    sendOrderToGoogleAppsScript(formData);
+  });
+  m.append("cartItems", cartItems);
 
   fetch(scriptURL, { method: "POST", body: form })
     .then((response) => console.log("Success!", response))
