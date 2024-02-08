@@ -89,6 +89,41 @@ closeModalBtn.addEventListener("click", function () {
   orderModal.style.display = "none";
 });
 
+// Функция для отправки уведомления о заказе в Телеграм
+function sendTelegramNotification(orderData) {
+  const chatId = 750458682; // Ваш chat_id
+  const token = "6619034502:AAHkuNvShiOvEUqW9ek7JrQbk1LPTEuDOWY"; // Токен вашего бота
+
+  const message = `
+    Новый заказ!\n
+    Имя: ${orderData.name}\n
+    Фамилия: ${orderData.surname}\n
+    Телефон: ${orderData.phone}\n
+    Email: ${orderData.email}\n
+    Город доставки: ${orderData.city}\n
+    Отделение Новой Почты: ${orderData.postOffice}\n
+    Общая стоимость: ${orderData.totalPrice}\n
+    Список товаров:\n
+    ${orderData.cartItems}
+    `;
+
+  const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
+
+  const formData = new FormData();
+  formData.append("chat_id", chatId);
+  formData.append("text", message);
+
+  fetch(telegramUrl, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) =>
+      console.error("Error sending Telegram notification:", error)
+    );
+}
+
 // Добавляем функционал для отправки заказа на сервер
 const orderForm = document.getElementById("order-form");
 
@@ -117,76 +152,12 @@ orderForm.addEventListener("submit", function (event) {
     cartItems: cartItems,
   };
 
-  // Отправляем данные на Google Sheets
-  // URL вашего Google Apps Script
-  const scriptURL =
-    "https://script.google.com/macros/s/AKfycbxKGpwx2EQ7DhmNvSkkpN--4FnqoF5fyZoQouV3epKidiiji2gd_EtrK3OfrZO5cckV/exec";
-
-  // Функция для отправки данных на сервер
-  function sendOrderToGoogleAppsScript(data) {
-    // Создаем объект FormData для отправки данных формы
-    const form = new FormData();
-    form.append("name", data.name);
-    form.append("surname", data.surname);
-    form.append("phone", data.phone);
-    form.append("email", data.email);
-    form.append("city", data.city);
-    form.append("postOffice", data.postOffice);
-    form.append("totalPrice", data.totalPrice);
-    form.append("cartItems", data.cartItems);
-
-    // Отправляем данные на Google Apps Script
-    fetch(scriptURL, { method: "POST", body: form, mode: "cors" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Действия при успешной отправке данных
-        console.log("Success:", data);
-        alert("Ваш заказ успешно размещен!");
-      })
-      .catch((error) => {
-        // Обработка ошибок
-        console.error("Error:", error);
-        alert("Произошла ошибка при отправке заказа.");
-      });
-  }
-
-  // Обработчик события отправки формы заказа
-  const orderForm = document.getElementById("order-form");
-
-  orderForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    // Получаем данные формы
-    const formData = {
-      name: document.getElementById("name").value,
-      surname: document.getElementById("surname").value,
-      phone: document.getElementById("phone").value,
-      email: document.getElementById("email").value,
-      city: document.getElementById("city").value,
-      postOffice: document.getElementById("postOffice").value,
-      totalPrice: document.getElementById("total-price").textContent,
-      cartItems: cart
-        .map((item) => `${item.name} - ${item.price} грн.`)
-        .join("\n"),
-    };
-
-    // Отправляем данные на сервер
-    sendOrderToGoogleAppsScript(formData);
-  });
-  m.append("cartItems", cartItems);
-
-  fetch(scriptURL, { method: "POST", body: form })
-    .then((response) => console.log("Success!", response))
-    .catch((error) => console.error("Error!", error));
+  // Отправляем уведомление в Телеграм
+  sendTelegramNotification(orderData);
 
   // После успешной отправки заказа очищаем корзину и закрываем модальное окно
   alert("Ваш заказ успешно размещен!");
-  cart = []; // Очищаем корзину
+  cart.length = 0; // Очищаем корзину
   updateCartView(); // Обновляем отображение корзины
   orderModal.style.display = "none"; // Закрываем модальное окно
 });
