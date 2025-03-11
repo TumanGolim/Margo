@@ -95,16 +95,13 @@ function sendTelegramNotification(orderData) {
   const token = "6619034502:AAHkuNvShiOvEUqW9ek7JrQbk1LPTEuDOWY"; // Токен вашего бота
 
   const message = `
-    Новый заказ!\n
-    Имя: ${orderData.name}\n
-    Фамилия: ${orderData.surname}\n
-    Телефон: ${orderData.phone}\n
-    Email: ${orderData.email}\n
-    Город доставки: ${orderData.city}\n
-    Отделение Новой Почты: ${orderData.postOffice}\n
-    Общая стоимость: ${orderData.totalPrice}\n
-    Список товаров:\n
-    ${orderData.cartItems}
+ 🛒 Новый заказ!\n
+    👤 Имя: ${orderData.name}\n
+    📞 Телефон: ${orderData.phone}\n
+    📍 Город: ${orderData.city}\n
+    🏤 Отделение: ${orderData.postOffice}\n
+    💰 Итог: ${orderData.totalPrice}\n
+    🛍 Товары:\n${orderData.cartItems}
     `;
 
   const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
